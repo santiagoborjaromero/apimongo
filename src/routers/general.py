@@ -3,7 +3,6 @@ from fastapi import APIRouter, Depends
 from src.models.hcommand_model import Hcommand
 from src.models.general_model import DataRequest
 from src.schemas.hcommand_schema import hcommandEntity, hcommandsEntity
-# from src.utils.utils_jwt import get_ws_origin, getTokenData
 from src.utils.functions import errorHandler, formatResponse, getTokenData, get_ws_origin
 from src.config.database import db
 from datetime import datetime

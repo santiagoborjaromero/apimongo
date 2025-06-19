@@ -1,7 +1,5 @@
 import json
 import base64
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.backends import default_backend
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
 

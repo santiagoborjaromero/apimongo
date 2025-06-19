@@ -1,10 +1,6 @@
 
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import json
-
-import uvicorn
-
 from src.routers.general import router
 
 app = FastAPI(title="LiSAH - MongoDB API")

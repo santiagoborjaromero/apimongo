@@ -2,11 +2,10 @@ from fastapi.responses import JSONResponse
 
 from fastapi import Depends, HTTPException, Request, Security
 from fastapi.security import APIKeyHeader, HTTPAuthorizationCredentials, HTTPBearer
-from jwt import encode, decode
-from jwt import exceptions
 from datetime import date, datetime, timedelta
 from fastapi.responses import JSONResponse
-from bson import json_util
+# from bson import json_util
+import json
 from src.utils.descrypter import decrypt
 
 def errorHandler(e):
@@ -45,7 +44,7 @@ def get_ws_origin(api_key: str = Security(APIKeyHeader(name='Authorization'))):
 
 def getTokenData(api_key:str):
     tokenOriginal = api_key.split(" ")[1]
-    dToken = json_util.loads(validate_token(tokenOriginal))
+    dToken = json.loads(validate_token(tokenOriginal))
     return dToken
 
 # $rec = [
@@ -66,7 +65,7 @@ def validate_token(token):
             status = False 
         else:
             status = True
-            message = json_util.loads(jwt)
+            message = json.loads(jwt)
             fecha_caducidad = message["expire_date"]
             if fecha_caducidad >= datetime.now().strftime("%Y-%m-%d %H:%M:%S"):
                 status = True
@@ -74,9 +73,9 @@ def validate_token(token):
                 status = False
                 message = "Token Expirado"
 
-        return json_util.dumps({"status": status, "message": message})  
+        return json.dumps({"status": status, "message": message})  
     except Exception as ex:
         print("Error jwt", ex)
-        return json_util.dumps({"status": status, "message": ex})  
+        return json.dumps({"status": status, "message": ex})  
     
     

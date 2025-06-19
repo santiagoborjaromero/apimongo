@@ -34,15 +34,3 @@ Para ver la documentacion de las rutas se puede poner el siguiente link en el br
 http://127.0.0.1:5000/redoc
 http://127.0.0.1:5000/docs
 ```
-
-# Docker
-
-Build
-```
-docker build -t lisah-api-mongo .
-```
-
-Correr el Doclker
-```
-docker run -it -p 5000:5000 lisah-api-mongo
-```
