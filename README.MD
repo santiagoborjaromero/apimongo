@@ -1,10 +1,15 @@
 # Api - Mongo
 ### [FastAPI](https://fastapi.tiangolo.com/)
 
-> **Iniciado:** 2025-06-18
+**Inicio:** 2025-06-18
 
-## Instalaciones
+## Instalación
+![](https://img.shields.io/badge/Python-3.12-blue) 
+![](https://img.shields.io/badge/Framework-FastAPI-gr) 
+![](https://img.shields.io/badge/Base_de_Datos-MongoDB-red) 
 
+
+Crear entoerno virtual
 ```bash
 # Entorno virtual
 python -m venv venv
