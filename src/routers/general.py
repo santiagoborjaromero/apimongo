@@ -66,6 +66,7 @@ async def data(data: DataRequest, origin: dict = Depends(get_ws_origin)):
                     idagente = int(idn[3]),
                     idcola_comando = int(d["id"]),
                     fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    comando = d["cmd"],
                     resultado = d["respuesta"]
                 )
                 result = await db.hcommand.insert_one(dict(hcmd))

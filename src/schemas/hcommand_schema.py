@@ -6,6 +6,7 @@ def hcommandEntity(item) -> dict:
         "idagente": item["idusuario"],
         "idcola_comando": item["idcola_comando"],
         "fecha": item["fecha"],
+        "comando": item["comando"],
         "resultado": item["resultado"],
     }
 

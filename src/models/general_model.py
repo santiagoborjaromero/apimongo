@@ -5,6 +5,7 @@ try:
     
     class DataItem(BaseModel):
         id: int
+        cmd: str
         respuesta: str
 
     class DataRequest(BaseModel):

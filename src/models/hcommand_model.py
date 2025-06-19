@@ -9,6 +9,7 @@ try:
         idagente: int | None = None
         idcola_comando: int | None = None
         fecha: str | None = None
+        comando: str | None = None
         resultado: str | None = None
 
     model_config = {"from_attributes": True}
