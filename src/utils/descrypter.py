@@ -10,15 +10,14 @@ def decrypt(data):
     try:
         cdata1 = base64.b64decode(data)
         cdata = base64.b64decode(cdata1)
-        iv_received = cdata[:16]
-        ciphertext = cdata[16:]
+        ciphertext = cdata
 
-        assert iv == iv_received, f"El IV no coincide {iv} {iv_received}"
+        # assert iv == iv_received, f"El IV no coincide {iv} {iv_received}"
 
         if len(ciphertext) % AES.block_size != 0:
             raise ValueError("El texto cifrado no tiene tamaño múltiplo de 16 bytes")
 
-        cipher = AES.new(key, AES.MODE_CBC, iv=iv_received)
+        cipher = AES.new(key, AES.MODE_CBC, iv=iv)
         plaintext_padded = cipher.decrypt(ciphertext)
 
         try:

@@ -1,15 +1,21 @@
-from typing import List, Optional
-from datetime import datetime
+from typing import List
 from pydantic import BaseModel, PydanticUserError
 try:
     
     class DataItem(BaseModel):
-        id: int
+        id: str
         cmd: str
         respuesta: str
 
+    class DataIdentificador(BaseModel):
+        id: int
+        idcliente: int
+        idusuario: int
+        idservidor: int
+
     class DataRequest(BaseModel):
-        identificador: str
+        action: str
+        identificador: DataIdentificador
         data: List[DataItem]
 
     model_config = {"from_attributes": True}

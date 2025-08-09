@@ -1,4 +1,3 @@
-from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel, PydanticUserError
 try:
@@ -6,9 +5,9 @@ try:
         idcliente: int | None = None
         idservidor: int | None = None
         idusuario: int | None = None
-        idagente: int | None = None
-        idcola_comando: int | None = None
-        fecha: str | None = None
+        idoperacion: int | None = None
+        idcola_comando: str | None = ""
+        fecha: datetime | None = None
         comando: str | None = None
         resultado: str | None = None
 

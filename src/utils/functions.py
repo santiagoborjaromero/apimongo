@@ -1,8 +1,7 @@
 from fastapi.responses import JSONResponse
-
-from fastapi import Depends, HTTPException, Request, Security
-from fastapi.security import APIKeyHeader, HTTPAuthorizationCredentials, HTTPBearer
-from datetime import date, datetime, timedelta
+from fastapi import Security
+from fastapi.security import APIKeyHeader
+from datetime import  datetime, timedelta, timezone
 from fastapi.responses import JSONResponse
 # from bson import json_util
 import json
@@ -36,11 +35,14 @@ def formatResponse(stat: int, object: str | list[str]):
     
 
     return JSONResponse({"status": status, "message": message, "data": data})
-    # return JSONResponse({"status": status, "message": object})
 
 
 def get_ws_origin(api_key: str = Security(APIKeyHeader(name='Authorization'))):
     return api_key
+
+def sendTokenData(api_key:str):
+    tokenOriginal = api_key.split(" ")[1]
+    return tokenOriginal
 
 def getTokenData(api_key:str):
     tokenOriginal = api_key.split(" ")[1]
@@ -64,10 +66,17 @@ def validate_token(token):
         if "Error" in jwt:
             status = False 
         else:
+
+            fecha =  datetime.now()
+            fecha_utc5 = fecha + timedelta(hours=-5)
+
             status = True
             message = json.loads(jwt)
             fecha_caducidad = message["expire_date"]
-            if fecha_caducidad >= datetime.now().strftime("%Y-%m-%d %H:%M:%S"):
+            # print("TZ", datetime.timetz(datetime.now()) )
+            # print("Fecha de Caducidad", fecha_caducidad)
+            # print("Fecha de Ahora", fecha_utc5.strftime("%Y-%m-%d %H:%M:%S"))
+            if fecha_caducidad >= fecha_utc5.strftime("%Y-%m-%d %H:%M:%S"):
                 status = True
             else:
                 status = False

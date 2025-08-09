@@ -53,3 +53,50 @@ Para saber la ip de cada contenedor
 ```bash
 docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nice_hoover
 ```
+
+
+```bash
+ldapadd -x -w L1s4hUn14nd3s -D "cn=admin,dc=sercop,dc=com" << EOF
+# LDIF file to add organizational unit "ou=devops" under "dc=sercop,dc=com"
+dn: ou=devops,dc=sercop,dc=com
+objectClass: organizationalUnit
+ou: devops
+
+# LDIF file to add organizational unit "ou=appdev" under "dc=sercop,dc=com"
+dn: ou=appdev,dc=sercop,dc=com
+objectClass: organizationalUnit
+ou: appdev
+EOF
+
+# USUARIOS
+
+ldapadd -x -w L1s4hUn14nd3s -D "cn=admin,dc=sercop,dc=com" << EOF
+# LDIF file to Create user "santiago.borja" in "ou=appdev" under "dc=sercop,dc=com"
+dn: cn=amrutha,ou=devops,dc=sercop,dc=com
+objectClass: person
+cn: santiago.borja
+sn: Santiuago Borja
+userPassword: L1s4hUn14nd3s
+
+# LDIF file to Create user "hugo.herrera" in "ou=appdev" under "dc=sercop,dc=com"
+dn: cn=charlie,ou=appdev,dc=sercop,dc=com
+objectClass: inetOrgPerson
+cn: hugo.herrera
+sn: Hugo Herrera
+userPassword: L1s4hUn14nd3s
+
+# LDIF file to Create user "jorge.lopez" in "ou=appdev" under "dc=sercop,dc=com"
+dn: cn=amit,ou=appdev,dc=sercop,dc=com
+objectClass: inetOrgPerson
+cn: jorge.lopez
+sn: Jorge Lopez
+userPassword: L1s4hUn14nd3s
+EOF
+
+
+ldapsearch -x -b dc=sercop,dc=com -D "cn=admin,dc=sercop,dc=com" -w L1s4hUn14nd3s -s sub "objectclass=*"
+
+```
+
+
+
