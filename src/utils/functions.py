@@ -49,14 +49,6 @@ def getTokenData(api_key:str):
     dToken = json.loads(validate_token(tokenOriginal))
     return dToken
 
-# $rec = [
-#     "paq" => $obj->idcliente,
-#     "ref" => $obj->idusuario,
-#     "task" => $obj->idrol,
-#     "expire_date" => date("Y-m-d H:i:s", strtotime('+1 day'))
-# ];
-# {'status': True, 'data': '{"ref":6,"paq":1,"task":4,"expire_date":"2025-06-19 22:41:07"}'}
-
 def validate_token(token):
     jwt = ""
     try:
@@ -73,9 +65,6 @@ def validate_token(token):
             status = True
             message = json.loads(jwt)
             fecha_caducidad = message["expire_date"]
-            # print("TZ", datetime.timetz(datetime.now()) )
-            # print("Fecha de Caducidad", fecha_caducidad)
-            # print("Fecha de Ahora", fecha_utc5.strftime("%Y-%m-%d %H:%M:%S"))
             if fecha_caducidad >= fecha_utc5.strftime("%Y-%m-%d %H:%M:%S"):
                 status = True
             else:

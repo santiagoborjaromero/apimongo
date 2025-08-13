@@ -45,30 +45,16 @@ async def savecmd(request:Request, data: DataRequest,  origin: dict = Depends(ge
         if (token_data["status"]):
             print("TOKEN OK")
 
-            # document = data.model_dump()
-            # print(document)
-
             document = dict(data)
             identificador = document["identificador"]
             data = document["data"]
-            # print(document)
-            # print(identificador)
             fecha =  datetime.now()
             fecha_utc5 = fecha + timedelta(hours=-5)
-            # idn = ((base64.b64decode(document["identificador"])).decode(encoding="utf-8")).split("|")
-            # data = document["data"] 
             inserciones = 0
             for d in data:
                 
-                cmd_string = d.cmd
-                cmd_string_bytes = cmd_string.encode("ascii")
-                base64_bytes = base64.b64encode(cmd_string_bytes)
-                cmd = base64_bytes.decode("ascii")
-                
-                respuesta_string = d.respuesta
-                respuesta_string_bytes = respuesta_string.encode("ascii")
-                base64_bytes = base64.b64encode(respuesta_string_bytes)
-                respuesta = base64_bytes.decode("ascii")
+                cmd =  d.cmd
+                respuesta= d.respuesta
                 
                 hcmd = Hcommand(
                     idcliente = identificador.idcliente,
@@ -80,7 +66,6 @@ async def savecmd(request:Request, data: DataRequest,  origin: dict = Depends(ge
                     comando = cmd,
                     resultado = respuesta,
                 )
-                # print(hcmd)
                 await db.historico_comandos.insert_one(dict(hcmd))
                 inserciones +=1
 
@@ -106,13 +91,7 @@ async def ldap(origin: dict = Depends(get_ws_origin)):
         token_data = getTokenData(origin)
         token = sendTokenData(origin)
 
-        # print(token_data)
         if (token_data["status"]):
-            # print("TOKEN OK")
-            # idcliente = token_data["message"]["idcliente"]
-            # print(idcliente)
-
-            # LDAP_SERVER_URL = "ldap://172.20.0.3"
             LDAP_SERVER_URL = "172.20.0.3"
             LDAP_PORT = 389
             # LDAP_BASE_DN = "dc=sercop,dc=com"  
