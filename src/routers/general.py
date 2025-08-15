@@ -46,16 +46,13 @@ async def savecmd(request:Request, data: DataRequest,  origin: dict = Depends(ge
             print("TOKEN OK")
 
             document = dict(data)
+
             identificador = document["identificador"]
             data = document["data"]
             fecha =  datetime.now()
             fecha_utc5 = fecha + timedelta(hours=-5)
             inserciones = 0
             for d in data:
-                
-                cmd =  d.cmd
-                respuesta= d.respuesta
-                
                 hcmd = Hcommand(
                     idcliente = identificador.idcliente,
                     idservidor = identificador.idusuario,
@@ -63,10 +60,15 @@ async def savecmd(request:Request, data: DataRequest,  origin: dict = Depends(ge
                     idoperacion = identificador.id,
                     idcola_comando = d.id,
                     fecha = fecha_utc5,
-                    comando = cmd,
-                    resultado = respuesta,
+                    comando = d.cmd,
+                    resultado = d.respuesta,
                 )
-                await db.historico_comandos.insert_one(dict(hcmd))
+                try:
+                    resp = await db.historico_comandos.insert_one(dict(hcmd))
+                    print("RESPUESTA", resp)
+                except Exception as err:
+                    print("ERROR insert", err)
+
                 inserciones +=1
 
             status = 1
@@ -77,7 +79,7 @@ async def savecmd(request:Request, data: DataRequest,  origin: dict = Depends(ge
             message = token_data["message"]
     except Exception as ex:
         status = False
-        print(ex)
+        print("Exception", ex)
         message = errorHandler(ex)
 
     return formatResponse(status, message)
